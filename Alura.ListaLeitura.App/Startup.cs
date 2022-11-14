@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +28,9 @@ namespace Alura.ListaLeitura.App
             routeBuilder.MapRoute("Livros/Lendo", LivrosLendo);
             routeBuilder.MapRoute("cadastro/novolivro/{nome}/{autor}", CadastroNovoLivro);
             routeBuilder.MapRoute("Detalhes/{id:int}", ExibirDetalhes);
+            routeBuilder.MapRoute("cadastro/novolivro/", ExibirFormulario);
+            routeBuilder.MapRoute("cadastro/incluir", ProcessarFormulario);
+
             var rotas = routeBuilder.Build();
 
             app.UseRouter(rotas);
@@ -33,7 +38,45 @@ namespace Alura.ListaLeitura.App
             //app.Run(Roteamento);
         }
 
-        private Task ExibirDetalhes(HttpContext context)
+        public Task ProcessarFormulario(HttpContext context)
+        {
+            var livro = new Livro()
+            {                
+                //Titulo = context.Request.Query["nome"],
+                //Autor = context.Request.Query["autor"],
+                Titulo = context.Request.Form["nome"],
+                Autor = context.Request.Form["autor"],
+            };
+
+            var _repo = new LivroRepositorioCSV();
+            _repo.Incluir(livro);
+            return context.Response.WriteAsync("LIVRO ADICIONADO COM SUCESSO!");
+        }
+
+        public Task ExibirFormulario(HttpContext context)
+        {
+            var formulario = CarregarArquivoHtml("formulario");
+
+            return context.Response.WriteAsync(formulario);
+        }
+
+        private string CarregarArquivoHtml(string nomeDoArquivo)
+        {
+            //var html = @"<html>
+            //    <form action='cadastro/incluir'>
+            //        <input name='titulo' />
+            //        <input name='autor' />
+            //        <button>Gravar</button>
+            //    </form>
+            //</html>";
+
+            var nomeCompletoDoArquivo = $"../../../HTML/{nomeDoArquivo}.html"; //html separado em outro arquivo
+            using (var arquivo = File.OpenText(nomeCompletoDoArquivo)) { 
+                return arquivo.ReadToEnd();
+            }
+        }
+
+        public Task ExibirDetalhes(HttpContext context)
         {
             var id = Convert.ToInt32(context.GetRouteValue("id"));
             var _repo = new LivroRepositorioCSV();
@@ -42,7 +85,7 @@ namespace Alura.ListaLeitura.App
             return context.Response.WriteAsync(livro.Detalhes());
         }
 
-        private Task CadastroNovoLivro(HttpContext context)
+        public Task CadastroNovoLivro(HttpContext context)
         {
             var livro = new Livro()
             {
@@ -80,21 +123,40 @@ namespace Alura.ListaLeitura.App
         {
             var _repo = new LivroRepositorioCSV();
 
-            return context.Response.WriteAsync(_repo.ParaLer.ToString());
+            var conteudo = GerarHTML("para-ler", _repo.ParaLer.Livros);
+
+            return context.Response.WriteAsync(conteudo);
+
+            //return context.Response.WriteAsync(_repo.ParaLer.ToString());
         }
 
         public Task LivrosLendo(HttpContext context)
         {
             var _repo = new LivroRepositorioCSV();
 
-            return context.Response.WriteAsync(_repo.Lendo.ToString());
+            var conteudo = GerarHTML("lendo", _repo.Lendo.Livros);
+
+            return context.Response.WriteAsync(conteudo);
         }
 
         public Task LivrosLidos(HttpContext context)
         {
             var _repo = new LivroRepositorioCSV();
 
-            return context.Response.WriteAsync(_repo.Lidos.ToString());
+            var conteudo = GerarHTML("lidos", _repo.Lidos.Livros);
+
+            return context.Response.WriteAsync(conteudo);
+        }
+
+        public string GerarHTML(string arquivo, IEnumerable<Livro> lista)
+        {
+            var conteudoArquivo = CarregarArquivoHtml(arquivo);
+            foreach (var livro in lista)
+            {
+                conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li>#NOVO-ITEM#");
+            }
+            conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", "");
+            return conteudoArquivo;
         }
     }
 }
