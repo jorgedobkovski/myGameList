@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Cursos\\alura\\Alura.ListaLeitura\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj": {}
+    "D:\\Documentos\\01. cursos\\myGameList\\myGameList\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj": {}
   },
   "projects": {
-    "D:\\Cursos\\alura\\Alura.ListaLeitura\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj": {
+    "D:\\Documentos\\01. cursos\\myGameList\\myGameList\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Cursos\\alura\\Alura.ListaLeitura\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj",
+        "projectUniqueName": "D:\\Documentos\\01. cursos\\myGameList\\myGameList\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj",
         "projectName": "Alura.ListaLeitura.App",
-        "projectPath": "D:\\Cursos\\alura\\Alura.ListaLeitura\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj",
-        "packagesPath": "C:\\Users\\04880245283\\.nuget\\packages\\",
-        "outputPath": "D:\\Cursos\\alura\\Alura.ListaLeitura\\Alura.ListaLeitura.App\\obj\\",
+        "projectPath": "D:\\Documentos\\01. cursos\\myGameList\\myGameList\\Alura.ListaLeitura.App\\Alura.ListaLeitura.App.csproj",
+        "packagesPath": "C:\\Users\\Jorge Dobkovski\\.nuget\\packages\\",
+        "outputPath": "D:\\Documentos\\01. cursos\\myGameList\\myGameList\\Alura.ListaLeitura.App\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\04880245283\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jorge Dobkovski\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -65,7 +62,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
